@@ -13,6 +13,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('index');
+Route::get('/skener', function () {
+    return view('skener');
 });
+
+Route::resource('/', 'App\Http\Controllers\ProizvodiController');
+Route::resource('/proizvod', 'App\Http\Controllers\ProizvodiController');
+Route::get('/search', 'App\Http\Controllers\ProizvodiController@search')->name('search');
+Route::get('/quicksearch', 'App\Http\Controllers\ProizvodiController@searchbarcode')->name('searchbarcode');
