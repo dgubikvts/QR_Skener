@@ -14,7 +14,7 @@
       </ul>
       <form action="{{route('search')}}" method="GET" class="d-flex">
         <input class="form-control me-2" type="search" placeholder="Pretrazi..." aria-label="Search" name="query" id="query">
-        <button class="btn btn-outline-success" type="submit" id="pretraga">Search</button>
+        <button class="btn btn-outline-success" type="submit" id="pretraga"><i class="fa fa-search" aria-hidden="true"></i></button>
       </form>
 
     </div>
