@@ -1,10 +1,7 @@
 function onScanSuccess(decodedText, decodedResult) {
+    quicksearch = quicksearch.replace(':id', decodedText);
+    document.location.href = quicksearch;
     html5QrcodeScanner.clear();
-    let input = document.getElementById('barcode');
-    let button = document.getElementById('barcodesearch');
-    console.log(`Code matched = ${decodedText}`, decodedResult);
-    input.value = decodedText;
-    button.click();
   }
   
   function onScanFailure(error) {

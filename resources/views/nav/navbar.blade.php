@@ -16,10 +16,7 @@
         <input class="form-control me-2" type="search" placeholder="Pretrazi..." aria-label="Search" name="query" id="query">
         <button class="btn btn-outline-success" type="submit" id="pretraga">Search</button>
       </form>
-      <form action="{{route('searchbarcode')}}" method="GET" class="d-none">
-        <input class="form-control me-2" type="search" placeholder="Pretrazi..." aria-label="Search" name="query" id="barcode">
-        <button class="btn btn-outline-success" type="submit" id="barcodesearch">Search</button>
-      </form>
+
     </div>
   </div>
 </nav>

@@ -20,4 +20,4 @@ Route::get('/skener', function () {
 Route::resource('/', 'App\Http\Controllers\ProizvodiController');
 Route::resource('/proizvod', 'App\Http\Controllers\ProizvodiController');
 Route::get('/search', 'App\Http\Controllers\ProizvodiController@search')->name('search');
-Route::get('/quicksearch', 'App\Http\Controllers\ProizvodiController@searchbarcode')->name('searchbarcode');
+Route::get('/quicksearch/{id}', 'App\Http\Controllers\ProizvodiController@quicksearch')->name('quicksearch');

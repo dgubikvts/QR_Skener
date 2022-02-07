@@ -15,6 +15,8 @@
         @yield('content')
     </div>
 
+
+    <script> var quicksearch = "{{route('quicksearch', ':id')}}"; </script>
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.1.6/html5-qrcode.min.js"></script>
     <script type="text/javascript" src="{{ URL::asset('js/script.js') }}"></script>

@@ -48,15 +48,11 @@ class ProizvodiController extends Controller
         $proizvod = Srafovi::where('barcode', $query)->orWhere('naziv', 'like', "%$query%")->orWhere('opis', 'like', "%$query%")->get();
         return view('rezultat-pretrage', compact('proizvod', 'query'));
     }
-    public function searchbarcode(Request $request)
+    public function quicksearch($query)
     {
-        $request->validate([
-            'query'=>'required'
-        ]);
-        $query = $request->input('query');
-        $proizvod = Srafovi::where('barcode', $query)->first();
-        return view('proizvod')->with('proizvod', $proizvod);
-    }
+        $proizvod = Srafovi::where('barcode', $query)->first()->id;
+        return redirect()->route('proizvod.show', $proizvod);
+    }    
 
     /**
      * Display the specified resource.
