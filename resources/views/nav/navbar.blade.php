@@ -11,12 +11,24 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="/skener">Skener</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/orders">Porudzbine</a>
+        </li>
       </ul>
+      <a href="{{route('cart')}}" class="mx-3 korpa d-flex">
+        <i class="fas fa-shopping-cart velicina mx-2"></i><p class="m-0 cartquantity">{{ App\Http\Controllers\ProizvodiController::cartQty() }}</p>
+      </a>
+      <a href="{{route('flush')}}">
+        <p>Obrisi kes</p>
+      </a>
       <form action="{{route('search')}}" method="GET" class="d-flex">
         <input class="form-control me-2" type="search" placeholder="Pretrazi..." aria-label="Search" name="query" id="query">
-        <button class="btn btn-outline-success" type="submit" id="pretraga"><i class="fa fa-search" aria-hidden="true"></i></button>
+        <button class="btn btn-outline-success" type="submit" id="pretraga"><i class="fal fa-search"></i></button>
       </form>
 
     </div>
   </div>
 </nav>
+<div class="alert alert-success alert-popup text-center" style="display:none" role="alert">
+      Dodato u korpu!
+</div>
