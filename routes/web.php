@@ -21,7 +21,7 @@ Route::resource('/', 'App\Http\Controllers\ProizvodiController');
 Route::resource('/proizvod', 'App\Http\Controllers\ProizvodiController');
 Route::get('/search', 'App\Http\Controllers\ProizvodiController@search')->name('search');
 Route::get('/quicksearch/{id}', 'App\Http\Controllers\ProizvodiController@quicksearch')->name('quicksearch');
-Route::get('/addtocart', 'App\Http\Controllers\ProizvodiController@add_to_cart')->name('add.to.cart');
+Route::post('/addtocart', 'App\Http\Controllers\ProizvodiController@add_to_cart')->name('add.to.cart');
 Route::delete('/removefromcart', 'App\Http\Controllers\ProizvodiController@remove_from_cart')->name('remove.from.cart');
 Route::patch('/updatecart', 'App\Http\Controllers\ProizvodiController@update_cart')->name('update.cart');
 Route::get('/cart', 'App\Http\Controllers\ProizvodiController@cart')->name('cart');

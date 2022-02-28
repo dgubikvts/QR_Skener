@@ -9,15 +9,13 @@
                 <div class="text-right col-6 offset-1 d-flex flex-column">
                         <p class="lead  my-5">{!! $proizvod->opis !!}</p>
                         <div class="mt-auto">
-                        <p class="h4 mb-5">Cena: {{$proizvod->cena}}rsd</p>
-                        <form action="{{route('add.to.cart')}}" method="GET" class="d-flex">
+                        <p class="h4 mb-5" data-name="cena" data-cena="{{$proizvod->cena}}"></p>
+                        <form action="{{route('add.to.cart')}}" method="POST" class="d-flex">
                             <input type="number" name="quantity" value="1" min="1" max="50" class="text-center me-3" data-id="quantity{{$proizvod->id}}">                   
                             <button type="submit" class="btn btn-primary add-to-cart" data-id="{{$proizvod->id}}">Dodaj u korpu</button>
                             <a href="/skener" class="btn btn-secondary ms-5">Skeniraj proizvod</a>
                         </form>
                         </div>
-                        
-                    
                 </div>
             </div>
         
@@ -26,14 +24,20 @@
     @endif
     <script>
         $(document).ready(function () {
+            formatirajCene();
             $(".add-to-cart").click(function (e) {
                 e.preventDefault();
                 var id = $(this).attr('data-id');
                 var quantity = $("form").find(`[data-id='quantity${id}']`);
                 quantity.val() > 50 ? quantity.val(50) : null;
                 quantity.val() < 1 ? quantity.val(1) : null;
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
                 $.ajax({
-                    type: 'GET',
+                    type: 'POST',
                     url: "{{route('add.to.cart')}}",
                     data: {
                         id: id, 
@@ -41,10 +45,16 @@
                     },
                     success: function (response) {
                         $(".cartquantity").html(parseInt($(".cartquantity").html()) + parseInt(quantity.val()));
-                        $('.alert-popup').show().delay(1500).fadeOut();
+                        $('.navbar').append("<div class='alert alert-success alert-popup text-center' role='alert'><h4>Dodato u korpu! <hr></h4> <div class='d-flex'> <img src=" + response.proizvod['slika'] + " class='korpa-img'> <p class='lead align-self-center m-2'>" + response.proizvod['naziv'] + "</p></div></div>");
+                        $(".alert-popup").delay(1000).fadeOut(1000, function() {
+                            $( this ).remove();
+                        });
                     }
                 });
             });
+            function formatirajCene(){
+                $("p[data-name='cena']").html('Cena: ' + formatRSD($("p[data-name='cena']").attr('data-cena')) + 'rsd');
+            }
         });
     </script>
 @endsection

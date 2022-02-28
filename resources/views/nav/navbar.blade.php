@@ -29,6 +29,3 @@
     </div>
   </div>
 </nav>
-<div class="alert alert-success alert-popup text-center" style="display:none" role="alert">
-      Dodato u korpu!
-</div>

@@ -82,7 +82,7 @@ class ProizvodiController extends Controller
                 $cart[$request->id]['Kolicina'] += $request->quantity;
             }
             session()->put('cart', $cart);
-            return redirect()->back();
+            return response()->json(['proizvod' => $proizvod, 'qty' => $request->quantity]);
         }
         else return abort(404);
     }

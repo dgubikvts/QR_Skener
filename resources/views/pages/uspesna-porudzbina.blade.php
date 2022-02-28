@@ -14,23 +14,52 @@
         <tbody>
         @php $ukupnacena = 0 @endphp
         @foreach($order_items as $order_item)
-            <tr class="align-middle">
+            <tr class="align-middle" data-selectable="true">
                 <td><a href="/proizvod/{{$order_item->product->id}}"><img class="korpa-img p-0 m-0" src="{{url('/images/Sraf' . $order_item->product->id . '.jpg')}}" alt="{{$order_item->product->naziv}}"></a></td>
                 <td><a href="/proizvod/{{$order_item->product->id}}" class="text-decoration-none text-black">{{$order_item->product->naziv}}</a></td>
-                <td>{{$order_item->product->cena}}rsd</td>
+                <td data-name="cena" data-cena="{{$order_item->product->cena}}"></td>
                 <td>{{$order_item->quantity}}</td>
-                <td>{{$order_item->product->cena * $order_item->quantity}}rsd</td>
+                <td data-name="cenaReda" data-cena="{{$order_item->product->cena * $order_item->quantity}}"></td>
                 @php $ukupnacena += $order_item->product->cena * $order_item->quantity @endphp
             </tr>
         @endforeach
         </tbody>
     </table>
     <div class="d-flex justify-content-end mb-4">
-        <p class="h5 align-self-center m-0">Ukupno: {{ $ukupnacena }}rsd</p>
+        <p class="h5 align-self-center m-0 total" data-cena="{{ $ukupnacena }}"></p>
     </div>
     <hr>
     <a href="/" class="btn btn-primary float-end">Nazad na pocetnu</a>
-
 </div>
-
+<script>
+    $(document).ready(function () {
+        formatirajCene();
+        $(".add-to-cart").click(function (e) {
+            e.preventDefault();
+            var id = $(this).attr('data-id');
+            var quantity = $("form").find(`[data-id='quantity${id}']`);
+            quantity.val() > 50 ? quantity.val(50) : null;
+            quantity.val() < 1 ? quantity.val(1) : null;
+            $.ajax({
+                type: 'GET',
+                url: "{{route('add.to.cart')}}",
+                data: {
+                    id: id, 
+                    quantity: quantity.val()
+                },
+                success: function (response) {
+                    $(".cartquantity").html(parseInt($(".cartquantity").html()) + parseInt(quantity.val()));
+                    $('.alert-popup').show().delay(1500).fadeOut();
+                }
+            });
+        });
+        function formatirajCene(){
+            $("tr[data-selectable='true']").each(function(index, tr) {
+                $(tr).find("[data-name='cena']").html(formatRSD($(tr).find("[data-name='cena']").attr('data-cena')) + 'rsd');
+                $(tr).find("[data-name='cenaReda']").html(formatRSD($(tr).find("[data-name='cenaReda']").attr('data-cena')) + 'rsd');
+            });
+            $('.total').html('Ukupno: ' + formatRSD($('.total').attr('data-cena')) + 'rsd');
+        }
+    });
+</script>
 @endsection

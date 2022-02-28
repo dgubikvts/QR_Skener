@@ -17,6 +17,7 @@ class CreateProductsTable extends Migration
             $table->id();
             $table->timestamps();
             $table->string('naziv');
+            $table->string('slika');
             $table->mediumText('opis');
             $table->integer('cena');
             $table->string('barcode');
