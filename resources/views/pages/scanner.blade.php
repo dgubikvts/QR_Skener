@@ -8,8 +8,8 @@
     <div style="width: 500px" id="reader" class="d-block m-auto mt-5"></div>
 
     <script>
-        $(".errors").delay(1000).fadeOut(1000, function() {
-            $( this ).remove();
+        $(".errors").delay(2000).fadeOut(1000, function() {
+            $(this).remove();
         });
     </script>
 @endsection

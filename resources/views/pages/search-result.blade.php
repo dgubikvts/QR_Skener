@@ -7,9 +7,9 @@
                 <div class="col mb-5">
                     <div class="card h-100">
                         <div class="card-header">
-                            <a href="/proizvod/{{$s->id}}" class="text-decoration-none text-black"><h5 class="text-center my-2 card-title">{{$s->naziv}}</h5></a>
+                            <a href="/product/{{$s->id}}" class="text-decoration-none text-black"><h5 class="text-center my-2 card-title">{{$s->naziv}}</h5></a>
                         </div>
-                        <a href="/proizvod/{{$s->id}}"><img class="card-img-top" src="{{url('/images/Sraf' . $s->id . '.jpg')}}" alt="{{$s->naziv}}"></a>
+                        <a href="/product/{{$s->id}}"><img class="card-img-top" src="{{url('/images/Sraf' . $s->id . '.jpg')}}" alt="{{$s->naziv}}"></a>
                         <div class="card-body d-flex flex-column">
                             <p class="card-text">{!! $s->opis !!}</p>
                             <p class="card-text lead mt-auto" data-name="cena" data-cena="{{$s->cena}}"></p>
@@ -49,11 +49,24 @@
                         quantity: quantity.val()
                     },
                     success: function (response) {
-                        $(".cartquantity").html(parseInt($(".cartquantity").html()) + parseInt(quantity.val()));
-                        $('.navbar').append("<div class='alert alert-success alert-popup text-center' role='alert'><h4>Dodato u korpu! <hr></h4> <div class='d-flex'> <img src=" + response.proizvod['slika'] + " class='korpa-img'> <p class='lead align-self-center m-2'>" + response.proizvod['naziv'] + "</p></div></div>");
+                        $(".cartquantity").html(response.totalqty);
+                        $(".cartquantity").attr('data-qty', response.totalqty);
+                        $('.navbar').append(`
+                        <div class='alert alert-success alert-popup text-center' role='alert'>
+                            <div class='d-flex'> 
+                                <img src="${response.proizvod['slika']}" width='100px'>
+                                <p class='lead align-self-center m-0 m-3'>
+                                    ${response.proizvod['naziv']}
+                                </p>
+                                <p class='lead align-self-center m-0 ms-auto'>
+                                    x${response.qty}
+                                </p>
+                            </div>
+                        </div>`);
                         $(".alert-popup").delay(1000).fadeOut(1000, function() {
                             $( this ).remove();
                         });
+                        console.log(response.test);
                     }
                 });
             });

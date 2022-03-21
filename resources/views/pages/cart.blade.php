@@ -1,7 +1,7 @@
 @extends('layouts/app')
 @section('content')
 
-@if(session('cart'))
+@if($cart)
     <div class="col-12 col-md-10 col-lg-8 col-xl-6 m-auto">
         <table class="table table-bordered text-center">
             <thead>
@@ -13,27 +13,42 @@
                 <th scope="col"></th>
             </thead>
             <tbody>
-            @php $ukupnacena = 0 @endphp
-            @foreach(session('cart') as $id => $proizvod)
-                <tr class="align-middle" data-id="{{$id}}" data-selectable="true">
-                    <td><a href="/proizvod/{{$id}}"><img class="korpa-img p-0 m-0" src="{{url('/images/Sraf' . $id . '.jpg')}}" alt="{{$proizvod['Naziv']}}"></a></td>
-                    <td><a href="/proizvod/{{$id}}" class="text-decoration-none text-black">{{$proizvod['Naziv']}}</a></td>
-                    <td data-name="pojedinacna" data-cena="{{$proizvod['Cena']}}">{{$proizvod['Cena']}}rsd</td>
-                    <td><input type="number" name="quantity{{$id}}" data-id="{{$id}}" data-name='qty' value="{{$proizvod['Kolicina']}}" min="1" max="50" class="text-center update-cart" required></td>
-                    <td data-cena="{{$proizvod['Cena'] * $proizvod['Kolicina']}}" data-name="UkupnaCena">{{$proizvod['Cena'] * $proizvod['Kolicina']}}rsd</td>
-                    @php $ukupnacena += $proizvod['Cena'] * $proizvod['Kolicina'] @endphp
-                    <td><a href="{{route('remove.from.cart')}}" class="remove-from-cart" data-id="{{$id}}"><i class="fal fa-trash-alt"></i></a></td>
-                </tr>
-            @endforeach
+            @auth
+                @php $ukupnacena = 0 @endphp
+                @foreach($cart as $id => $proizvod)
+                    <tr class="align-middle" data-id="{{$proizvod->product->id}}" data-selectable="true">
+                        <td><a href="/proizvod/{{$proizvod->product->id}}"><img class="korpa-img p-0 m-0" src="{{url($proizvod->product->slika)}}" alt="{{$proizvod->product->naziv}}"></a></td>
+                        <td><a href="/proizvod/{{$proizvod->product->id}}" class="text-decoration-none text-black">{{$proizvod->product->naziv}}</a></td>
+                        <td data-name="pojedinacna" data-cena="{{$proizvod->product->cena}}"></td>
+                        <td><input type="number" name="quantity{{$proizvod->product->id}}" data-id="{{$proizvod->product->id}}" data-name='qty' value="{{$proizvod->quantity}}" min="1" max="50" class="text-center update-cart" required></td>
+                        <td data-cena="{{$proizvod->product->cena * $proizvod->quantity}}" data-name="UkupnaCena"></td>
+                        @php $ukupnacena += $proizvod->product->cena * $proizvod->quantity @endphp
+                        <td><a href="{{route('remove.from.cart')}}" class="remove-from-cart" data-id="{{$proizvod->product->id}}"><i class="fal fa-trash-alt"></i></a></td>
+                    </tr>
+                @endforeach
+            @else
+                @php $ukupnacena = 0 @endphp
+                @foreach($cart as $id => $proizvod)
+                    <tr class="align-middle" data-id="{{$id}}" data-selectable="true">
+                        <td><a href="/proizvod/{{$id}}"><img class="korpa-img p-0 m-0" src="{{url('/images/Sraf' . $id . '.jpg')}}" alt="{{$proizvod['Naziv']}}"></a></td>
+                        <td><a href="/proizvod/{{$id}}" class="text-decoration-none text-black">{{$proizvod['Naziv']}}</a></td>
+                        <td data-name="pojedinacna" data-cena="{{$proizvod['Cena']}}">{{$proizvod['Cena']}}rsd</td>
+                        <td><input type="number" name="quantity{{$id}}" data-id="{{$id}}" data-name='qty' value="{{$proizvod['Kolicina']}}" min="1" max="50" class="text-center update-cart" required></td>
+                        <td data-cena="{{$proizvod['Cena'] * $proizvod['Kolicina']}}" data-name="UkupnaCena">{{$proizvod['Cena'] * $proizvod['Kolicina']}}rsd</td>
+                        @php $ukupnacena += $proizvod['Cena'] * $proizvod['Kolicina'] @endphp
+                        <td><a href="{{route('remove.from.cart')}}" class="remove-from-cart" data-id="{{$id}}"><i class="fal fa-trash-alt"></i></a></td>
+                    </tr>
+                @endforeach
+            @endauth
             </tbody>
         </table>
         <div class="d-flex justify-content-end mb-4">
             <a href="/" class="btn btn-primary float-end">Nastavi kupovinu</a>    
             <button class="btn btn-danger float-end mx-2 delete-all">Obrisi sve</button>    
-            <p class="h5 align-self-center m-0 total" data-cena="{{ $ukupnacena }}">Ukupno: {{ $ukupnacena }}rsd</p>
+            <p class="h5 align-self-center m-0 total {{ App\Http\Controllers\CartController::updateTotalPrice($ukupnacena) }}" data-cena="{{ $ukupnacena }}">Ukupno: {{ $ukupnacena }}rsd</p>
         </div>
         <hr>
-        <form action="{{route('unos.podataka')}}" method="POST">
+        <form action="{{route('data.input')}}" method="POST">
             @csrf
             <button type="submit" class="btn btn-success float-end">Idi na kasu</button>    
         </form>

@@ -7,14 +7,6 @@
 .card-title{
   text-decoration: none !important;
 }
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-input[type=number] {
-  -moz-appearance: textfield;
-}
 .korpa{
   text-decoration: none;
   color: green;
@@ -37,4 +29,7 @@ input[type=number] {
 }
 .container-fluid{
   margin-top: 80px;
+}
+li{
+  list-style-type: none;
 }

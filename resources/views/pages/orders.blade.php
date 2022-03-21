@@ -11,8 +11,8 @@
         <th scope="col">Ime</th>
         <th scope="col">Prezime</th>
         <th scope="col">Email</th>
+        <th scope="col">Mesto</th>
         <th scope="col">Adresa</th>
-        <th scope="col">Grad</th>
         <th scope="col">Telefon</th>
         <th scope="col">Proizvodi</th>
         </tr>
@@ -25,8 +25,8 @@
                 <td>{{$order->ime}}</td>
                 <td>{{$order->prezime}}</td>
                 <td>{{$order->email}}</td>
-                <td>{{$order->adresa}}</td>
                 <td>{{$order->grad}}</td>
+                <td>{{$order->adresa}}</td>
                 <td>{{$order->telefon}}</td>
                 <td>
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Modal{{$order->id}}">Detaljnije</button>
@@ -46,10 +46,8 @@
                                             <th>Kolicina</th>
                                         </thead>
                                         <tbody>
-                                            @php $total = 0 @endphp
                                             @foreach($order->order_item as $item)
                                                 @if($order->id === $item->order_id)
-                                                    @php $total += $item->product->cena * $item->quantity @endphp
                                                     <tr class="align-middle" data-selectable="true">
                                                         <td><img class="korpa-img p-0 m-0" src="{{url('/images/Sraf' . $item->product->id . '.jpg')}}"></td>
                                                         <td>{{$item->product->naziv}}</td>
@@ -60,7 +58,7 @@
                                             @endforeach
                                         </tbody>
                                     </table>
-                                    <p class="lead text-end ukupno" data-cena="{{$total}}"></p>
+                                    <p class="lead text-end ukupno" data-cena="{{ App\Http\Controllers\OrderController::getTotalPrice($order->id) }}"></p>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

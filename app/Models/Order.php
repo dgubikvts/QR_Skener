@@ -10,7 +10,6 @@ class Order extends Model
     use HasFactory;
 
     protected $fillable = [
-        'id',
         'city',
         'address',
         'phone_number',
@@ -25,7 +24,8 @@ class Order extends Model
         return $this->hasMany(OrderItem::class);
     }
 
-    public function createOrder($ime, $prezime, $email, $grad, $adresa, $telefon){
+    public function createOrder($user_id, $ime, $prezime, $email, $grad, $adresa, $telefon){
+        $this->user_id = $user_id;
         $this->ime = $ime;
         $this->prezime = $prezime;
         $this->email = $email;

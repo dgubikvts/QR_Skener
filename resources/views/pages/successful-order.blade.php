@@ -15,7 +15,7 @@
         @php $ukupnacena = 0 @endphp
         @foreach($order_items as $order_item)
             <tr class="align-middle" data-selectable="true">
-                <td><a href="/proizvod/{{$order_item->product->id}}"><img class="korpa-img p-0 m-0" src="{{url('/images/Sraf' . $order_item->product->id . '.jpg')}}" alt="{{$order_item->product->naziv}}"></a></td>
+                <td><a href="/proizvod/{{$order_item->product->id}}"><img class="korpa-img p-0 m-0" src="{{url($order_item->product->slika)}}" alt="{{$order_item->product->naziv}}"></a></td>
                 <td><a href="/proizvod/{{$order_item->product->id}}" class="text-decoration-none text-black">{{$order_item->product->naziv}}</a></td>
                 <td data-name="cena" data-cena="{{$order_item->product->cena}}"></td>
                 <td>{{$order_item->quantity}}</td>

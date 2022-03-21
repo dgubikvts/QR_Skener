@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class OrderItem extends Model
+class CartItem extends Model
 {
     use HasFactory;
 
@@ -17,12 +17,12 @@ class OrderItem extends Model
         return $this->belongsTo(Product::class);
     }
       
-    public function order(){
-        return $this->belongsTo(Order::class);
+    public function cart(){
+        return $this->belongsTo(Cart::class);
     }
     
-    public function createOrderItem($order_id, $product_id, $quantity){
-        $this->order_id = $order_id;
+    public function createCartItem($cart_id, $product_id, $quantity){
+        $this->cart_id = $cart_id;
         $this->product_id = $product_id;
         $this->quantity = $quantity;
         $this->save();

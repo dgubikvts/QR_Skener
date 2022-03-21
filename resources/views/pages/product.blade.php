@@ -13,7 +13,7 @@
                         <form action="{{route('add.to.cart')}}" method="POST" class="d-flex">
                             <input type="number" name="quantity" value="1" min="1" max="50" class="text-center me-3" data-id="quantity{{$proizvod->id}}">                   
                             <button type="submit" class="btn btn-primary add-to-cart" data-id="{{$proizvod->id}}">Dodaj u korpu</button>
-                            <a href="/skener" class="btn btn-secondary ms-5">Skeniraj proizvod</a>
+                            <a href="/skener" class="btn btn-secondary ms-5">Skeniraj sledeci proizvod</a>
                         </form>
                         </div>
                 </div>
@@ -44,8 +44,19 @@
                         quantity: quantity.val()
                     },
                     success: function (response) {
-                        $(".cartquantity").html(parseInt($(".cartquantity").html()) + parseInt(quantity.val()));
-                        $('.navbar').append("<div class='alert alert-success alert-popup text-center' role='alert'><h4>Dodato u korpu! <hr></h4> <div class='d-flex'> <img src=" + response.proizvod['slika'] + " class='korpa-img'> <p class='lead align-self-center m-2'>" + response.proizvod['naziv'] + "</p></div></div>");
+                        $(".cartquantity").html(response.totalqty);
+                        $('.navbar').append(`
+                        <div class='alert alert-success alert-popup text-center' role='alert'>
+                            <div class='d-flex'> 
+                                <img src="${response.proizvod['slika']}" width='100px'>
+                                <p class='lead align-self-center m-0 m-3'>
+                                    ${response.proizvod['naziv']}
+                                </p>
+                                <p class='lead align-self-center m-0 ms-auto'>
+                                    x${response.qty}
+                                </p>
+                            </div>
+                        </div>`);
                         $(".alert-popup").delay(1000).fadeOut(1000, function() {
                             $( this ).remove();
                         });

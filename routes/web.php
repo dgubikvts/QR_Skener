@@ -2,30 +2,19 @@
 
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
-Route::get('/skener', function () {
-    return view('pages.skener');
-});
-
-Route::resource('/', 'App\Http\Controllers\ProizvodiController');
-Route::resource('/proizvod', 'App\Http\Controllers\ProizvodiController');
+Route::view('/scanner', 'pages.scanner');
+Route::get('/', 'App\Http\Controllers\ProizvodiController@index');
+Route::get('/product/{id}', 'App\Http\Controllers\ProizvodiController@show')->name('product.show');
 Route::get('/search', 'App\Http\Controllers\ProizvodiController@search')->name('search');
-Route::get('/quicksearch/{id}', 'App\Http\Controllers\ProizvodiController@quicksearch')->name('quicksearch');
-Route::post('/addtocart', 'App\Http\Controllers\ProizvodiController@add_to_cart')->name('add.to.cart');
-Route::delete('/removefromcart', 'App\Http\Controllers\ProizvodiController@remove_from_cart')->name('remove.from.cart');
-Route::patch('/updatecart', 'App\Http\Controllers\ProizvodiController@update_cart')->name('update.cart');
-Route::get('/cart', 'App\Http\Controllers\ProizvodiController@cart')->name('cart');
+Route::get('/quick-search/{id}', 'App\Http\Controllers\ProizvodiController@quick_search')->name('quick.search');
+Route::post('/add-to-cart', 'App\Http\Controllers\CartController@add_to_cart')->name('add.to.cart');
+Route::delete('/remove-from-cart', 'App\Http\Controllers\CartController@remove_from_cart')->name('remove.from.cart');
+Route::patch('/update-cart', 'App\Http\Controllers\CartController@update_cart')->name('update.cart');
+Route::get('/cart', 'App\Http\Controllers\CartController@cart')->name('cart');
 Route::get('/flush', 'App\Http\Controllers\ProizvodiController@flush')->name('flush');
-Route::post('/unos_podataka', 'App\Http\Controllers\ProizvodiController@unos_podataka')->name('unos.podataka');
-Route::put('/submitorder', 'App\Http\Controllers\ProizvodiController@submit_order')->name('submit.order');
-Route::get('/orders', 'App\Http\Controllers\ProizvodiController@orders');
+Route::post('/data-input', 'App\Http\Controllers\OrderController@data_input')->name('data.input');
+Route::put('/submit-order', 'App\Http\Controllers\OrderController@submit_order')->name('submit.order');
+Route::get('/orders', 'App\Http\Controllers\OrderController@orders');
+
+Auth::routes();
+Route::get('/profile', 'App\Http\Controllers\HomeController@profile')->name('profile');
