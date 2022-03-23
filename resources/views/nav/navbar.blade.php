@@ -45,6 +45,9 @@
             <a class="dropdown-item" href="{{ route('profile') }}">
               Moj profil
             </a>
+            <a class="dropdown-item" href="{{ route('my.orders') }}">
+              Moje porudzbine
+            </a>
             <a class="dropdown-item" href="{{ route('logout') }}"
               onclick="event.preventDefault();
                         document.getElementById('logout-form').submit();">
