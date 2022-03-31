@@ -16,7 +16,7 @@ Route::get('/cart', 'App\Http\Controllers\CartController@cart')->name('cart');
 Route::get('/flush', 'App\Http\Controllers\ProizvodiController@flush')->name('flush');
 Route::post('/data-input', 'App\Http\Controllers\OrderController@data_input')->name('data.input');
 Route::put('/submit-order', 'App\Http\Controllers\OrderController@submit_order')->name('submit.order');
-Route::get('/orders', 'App\Http\Controllers\OrderController@orders')->middleware('auth');
+Route::get('/orders', 'App\Http\Controllers\OrderController@orders');
 Route::patch('/update-profile', 'App\Http\Controllers\HomeController@update_profile')->name('update.profile')->middleware('auth');
 Route::view('/my-orders', 'pages.my-orders')->name('my.orders')->middleware('auth');
 Auth::routes();
