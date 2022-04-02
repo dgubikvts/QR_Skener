@@ -22,12 +22,12 @@
             <tr>
                 <td>{{$order->id}}</td>
                 <td>{{$order->user_id ? $order->user_id : 'Gost'}}</td>
-                <td>{{$order->ime}}</td>
-                <td>{{$order->prezime}}</td>
+                <td>{{$order->name}}</td>
+                <td>{{$order->lastname}}</td>
                 <td>{{$order->email}}</td>
-                <td>{{$order->grad}}</td>
-                <td>{{$order->adresa}}</td>
-                <td>{{$order->telefon}}</td>
+                <td>{{$order->city}}</td>
+                <td>{{$order->address}}</td>
+                <td>{{$order->phone}}</td>
                 <td>
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Modal{{$order->id}}">Detaljnije</button>
                     <div class="modal fade" id="Modal{{$order->id}}" tabindex="-1" aria-labelledby="ModalLabel{{$order->id}}" aria-hidden="true">
@@ -50,8 +50,8 @@
                                                 @if($order->id === $item->order_id)
                                                     <tr class="align-middle" data-selectable="true">
                                                         <td><img class="korpa-img p-0 m-0" src="{{url('/images/Sraf' . $item->product->id . '.jpg')}}"></td>
-                                                        <td>{{$item->product->naziv}}</td>
-                                                        <td data-name="cenaReda" data-cena="{{$item->product->cena * $item->quantity}}"></td>
+                                                        <td>{{$item->product->title}}</td>
+                                                        <td data-name="cenaReda" data-cena="{{$item->product->price * $item->quantity}}"></td>
                                                         <td>{{$item->quantity}}</td>
                                                     </tr>
                                                 @endif

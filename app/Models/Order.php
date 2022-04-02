@@ -24,14 +24,14 @@ class Order extends Model
         return $this->hasMany(OrderItem::class);
     }
 
-    public function createOrder($user_id, $ime, $prezime, $email, $grad, $adresa, $telefon){
+    public function createOrder($user_id, $name, $lastname, $email, $city, $address, $phone){
         $this->user_id = $user_id;
-        $this->ime = $ime;
-        $this->prezime = $prezime;
+        $this->name = $name;
+        $this->lastname = $lastname;
         $this->email = $email;
-        $this->grad = $grad;
-        $this->adresa = $adresa;
-        $this->telefon = $telefon;
+        $this->city = $city;
+        $this->address = $address;
+        $this->phone = $phone;
         $this->save();
     }
 }

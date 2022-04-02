@@ -12,21 +12,21 @@
                 <tbody>
                     @foreach($order->order_item as $item)
                     <tr class="align-middle">
-                        <td class="p-0 m-0"><img src="{{url($item->product->slika)}}" alt="Image" class="korpa-img p-0 m-0"/></td>
-                        <td>{{$item->product->naziv}}</td>
-                        <td>{{$item->product->cena}}rsd</td>
+                        <td class="p-0 m-0"><img src="{{url($item->product->image)}}" alt="Image" class="korpa-img p-0 m-0"/></td>
+                        <td>{{$item->product->title}}</td>
+                        <td>{{$item->product->price}}rsd</td>
                         <td>x{{$item->quantity}}</td>
                     </tr>
                     @endforeach
                 </tbody>
             </table>
             <hr>
-            <p class="lead text-end me-2 total" data-cena="{{$order->cena}}"></p>
+            <p class="lead text-end me-2 total" data-cena="{{$order->price}}"></p>
         </div>
     </div>
         
     @empty
-        <p>No orders</p>
+        <h3 class="text-center">Trenutno nemate nijednu porudzbinu</h3>
     @endforelse
  
   

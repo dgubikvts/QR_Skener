@@ -73,10 +73,10 @@ class CartController extends Controller
                 if(!$cart) $cart = [];
                 if(!isset($cart[$request->id])){
                     $cart[$request->id] = [
-                        'Naziv' => $proizvod->naziv,
+                        'Naziv' => $proizvod->title,
                         'Kolicina' => $request->quantity,
-                        'Cena' => $proizvod->cena,
-                        'Opis' => $proizvod->opis,
+                        'Cena' => $proizvod->price,
+                        'Opis' => $proizvod->desc,
                         'Barcode' => $proizvod->barcode
                     ];
                 }

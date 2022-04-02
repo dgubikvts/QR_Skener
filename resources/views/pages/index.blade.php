@@ -4,21 +4,21 @@
 <h1 class="text-center display-4 my-5">Katalog</h1> 
     @if(count($products) > 0)
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 row-cols-xl-5 g-4">
-        @foreach($products as $s)
+        @foreach($products as $product)
             <div class="col mb-5">
                 <div class="card h-100">
                     <div class="card-header">
-                        <a href="/product/{{$s->id}}" class="text-decoration-none text-black"><h5 class="text-center my-2 card-title">{{$s->naziv}}</h5></a>
+                        <a href="/product/{{$product->id}}" class="text-decoration-none text-black"><h5 class="text-center my-2 card-title">{{$product->title}}</h5></a>
                     </div>
-                    <a href="/product/{{$s->id}}"><img class="card-img-top" src="{{url($s->slika)}}" alt="{{$s->naziv}}"></a>
+                    <a href="/product/{{$product->id}}"><img class="card-img-top" src="{{url($product->image)}}" alt="{{$product->title}}"></a>
                     <div class="card-body d-flex flex-column">
-                        <p class="card-text">{!! $s->opis !!}</p>
-                        <p class="card-text lead mt-auto" data-name="cena" data-cena="{{$s->cena}}"></p>
+                        <p class="card-text">{!! $product->desc !!}</p>
+                        <p class="card-text lead mt-auto" data-name="cena" data-cena="{{$product->price}}"></p>
                     </div>
                     <div class="card-footer">
                         <form action="{{route('add.to.cart')}}" method="POST" class="d-flex justify-content-around">
-                            <button type="submit" class="btn btn-primary mt-auto col-8 add-to-cart" data-id="{{$s->id}}">Dodaj u korpu</button>
-                            <input type="number" name="quantity" value="1" min="1" max="50" class="text-center" data-id="quantity{{$s->id}}">
+                            <button type="submit" class="btn btn-primary mt-auto col-8 add-to-cart" data-id="{{$product->id}}">Dodaj u korpu</button>
+                            <input type="number" name="quantity" value="1" min="1" max="50" class="text-center" data-id="quantity{{$product->id}}">
                         </form>
                     </div>
                 </div>
@@ -55,9 +55,9 @@
                         $('.navbar').append(`
                         <div class='alert alert-success alert-popup text-center' role='alert'>
                             <div class='d-flex'> 
-                                <img src="${response.proizvod['slika']}" width='100px'>
+                                <img src="${response.proizvod['image']}" width='100px'>
                                 <p class='lead align-self-center m-0 m-3'>
-                                    ${response.proizvod['naziv']}
+                                    ${response.proizvod['title']}
                                 </p>
                                 <p class='lead align-self-center m-0 ms-auto'>
                                     x${response.qty}

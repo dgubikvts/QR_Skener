@@ -15,7 +15,7 @@
                             <label for="name" class="col-md-4 col-form-label text-md-end">Ime:</label>
 
                             <div class="col-md-6">
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ Auth::user()->name }}" required autocomplete="given-name" autofocus>
+                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ Auth::user()->name }}" required autocomplete="given-name">
 
                                 @error('name')
                                     <span class="invalid-feedback" role="alert">

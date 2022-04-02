@@ -21,15 +21,15 @@ class ProizvodiController extends Controller
             'query'=>'required'
         ]);
         $query = $request->input('query');
-        $proizvod = Product::where('barcode', $query)->orWhere('naziv', 'like', "%$query%")->orWhere('opis', 'like', "%$query%")->get();
-        return view('pages.search-result', compact('proizvod', 'query'));
+        $products = Product::where('barcode', $query)->orWhere('title', 'like', "%$query%")->orWhere('desc', 'like', "%$query%")->get();
+        return view('pages.search-result', compact('products', 'query'));
     }
 
     public function quick_search($query)
     {
         try{
-            $proizvod = Product::where('barcode', $query)->firstOrFail()->id;
-            return redirect()->route('product.show', $proizvod);
+            $product_id = Product::where('barcode', $query)->firstOrFail()->id;
+            return redirect()->route('product.show', $product_id);
         }
         catch(ModelNotFoundException $e){
             return redirect('/scanner')->with('error','Taj proizvod ne postoji!');
@@ -44,8 +44,8 @@ class ProizvodiController extends Controller
     public function show($id)
     {
         try{
-            $proizvod = Product::findOrFail($id);
-            return view('pages.product')->with('proizvod', $proizvod);
+            $product = Product::findOrFail($id);
+            return view('pages.product')->with('product', $product);
         }
         catch(ModelNotFoundException $e){
             return redirect('/');

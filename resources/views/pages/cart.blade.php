@@ -15,23 +15,23 @@
             <tbody>
             @auth
                 @php $ukupnacena = 0 @endphp
-                @foreach($cart as $id => $proizvod)
-                    <tr class="align-middle" data-id="{{$proizvod->product->id}}" data-selectable="true">
-                        <td><a href="/proizvod/{{$proizvod->product->id}}"><img class="korpa-img p-0 m-0" src="{{url($proizvod->product->slika)}}" alt="{{$proizvod->product->naziv}}"></a></td>
-                        <td><a href="/proizvod/{{$proizvod->product->id}}" class="text-decoration-none text-black">{{$proizvod->product->naziv}}</a></td>
-                        <td data-name="pojedinacna" data-cena="{{$proizvod->product->cena}}"></td>
-                        <td><input type="number" name="quantity{{$proizvod->product->id}}" data-id="{{$proizvod->product->id}}" data-name='qty' value="{{$proizvod->quantity}}" min="1" max="50" class="text-center update-cart" required></td>
-                        <td data-cena="{{$proizvod->product->cena * $proizvod->quantity}}" data-name="UkupnaCena"></td>
-                        @php $ukupnacena += $proizvod->product->cena * $proizvod->quantity @endphp
-                        <td><a href="{{route('remove.from.cart')}}" class="remove-from-cart" data-id="{{$proizvod->product->id}}"><i class="fal fa-trash-alt"></i></a></td>
+                @foreach($cart as $id => $cartItem)
+                    <tr class="align-middle" data-id="{{$cartItem->product->id}}" data-selectable="true">
+                        <td><a href="/product/{{$cartItem->product->id}}"><img class="korpa-img p-0 m-0" src="{{url($cartItem->product->image)}}" alt="{{$cartItem->product->title}}"></a></td>
+                        <td><a href="/product/{{$cartItem->product->id}}" class="text-decoration-none text-black">{{$cartItem->product->title}}</a></td>
+                        <td data-name="pojedinacna" data-cena="{{$cartItem->product->price}}"></td>
+                        <td><input type="number" name="quantity{{$cartItem->product->id}}" data-id="{{$cartItem->product->id}}" data-name='qty' value="{{$cartItem->quantity}}" min="1" max="50" class="text-center update-cart" required></td>
+                        <td data-cena="{{$cartItem->product->price * $cartItem->quantity}}" data-name="UkupnaCena"></td>
+                        @php $ukupnacena += $cartItem->product->price * $cartItem->quantity @endphp
+                        <td><a href="{{route('remove.from.cart')}}" class="remove-from-cart" data-id="{{$cartItem->product->id}}"><i class="fal fa-trash-alt"></i></a></td>
                     </tr>
                 @endforeach
             @else
                 @php $ukupnacena = 0 @endphp
                 @foreach($cart as $id => $proizvod)
                     <tr class="align-middle" data-id="{{$id}}" data-selectable="true">
-                        <td><a href="/proizvod/{{$id}}"><img class="korpa-img p-0 m-0" src="{{url('/images/Sraf' . $id . '.jpg')}}" alt="{{$proizvod['Naziv']}}"></a></td>
-                        <td><a href="/proizvod/{{$id}}" class="text-decoration-none text-black">{{$proizvod['Naziv']}}</a></td>
+                        <td><a href="/product/{{$id}}"><img class="korpa-img p-0 m-0" src="{{url('/images/Sraf' . $id . '.jpg')}}" alt="{{$proizvod['Naziv']}}"></a></td>
+                        <td><a href="/product/{{$id}}" class="text-decoration-none text-black">{{$proizvod['Naziv']}}</a></td>
                         <td data-name="pojedinacna" data-cena="{{$proizvod['Cena']}}">{{$proizvod['Cena']}}rsd</td>
                         <td><input type="number" name="quantity{{$id}}" data-id="{{$id}}" data-name='qty' value="{{$proizvod['Kolicina']}}" min="1" max="50" class="text-center update-cart" required></td>
                         <td data-cena="{{$proizvod['Cena'] * $proizvod['Kolicina']}}" data-name="UkupnaCena">{{$proizvod['Cena'] * $proizvod['Kolicina']}}rsd</td>

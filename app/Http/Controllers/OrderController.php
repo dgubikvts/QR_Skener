@@ -20,12 +20,12 @@ class OrderController extends Controller
     public function submit_order(Request $request){
         $order = new Order();
         $order->createOrder(Auth::id(),
-                            $request->input('ime'),
-                            $request->input('prezime'),
+                            $request->input('name'),
+                            $request->input('lastname'),
                             $request->input('email'),
-                            $request->input('grad'),
-                            $request->input('ulica'),
-                            $request->input('telefon'));
+                            $request->input('city'),
+                            $request->input('address'),
+                            $request->input('phone'));
         if(Auth::user()){
             $cart = Cart::where('user_id', Auth::id())->first();
             $cartItem = CartItem::where('cart_id', $cart->id)->get();
@@ -33,7 +33,7 @@ class OrderController extends Controller
                 $orderItem = new OrderItem();
                 $orderItem->createOrderItem($order->id, $proizvod->product->id, $proizvod->quantity);
                 $proizvod->delete();
-                $order->cena = $cart->price;
+                $order->price = $cart->price;
                 $order->save();
             }
         }
@@ -43,7 +43,7 @@ class OrderController extends Controller
                 $orderItem = new OrderItem();
                 $orderItem->createOrderItem($order->id, $c, $cart[$c]['Kolicina']);
             }
-            $order->cena = session()->get('total');
+            $order->price = session()->get('total');
             $order->save();
             session()->flush();
         }
@@ -54,19 +54,19 @@ class OrderController extends Controller
     public function data_input(){
         if(Auth::user()){
             try{
-                $cart = CartItem::where('cart_id', Cart::where('user_id', Auth::id())->firstOrFail()->id)->get();
+                $cartItems = CartItem::where('cart_id', Cart::where('user_id', Auth::id())->firstOrFail()->id)->get();
             }
             catch(ModelNotFoundException $e){
-                $cart = null;
+                $cartItems = null;
             }
         }
         else{
-            $cart = session('cart');
+            $cartItems = session('cart');
         }
-        return view("pages.data-input")->with('cart', $cart);
+        return view("pages.data-input")->with('cartItems', $cartItems);
     }
  
     public static function getTotalPrice($order_id){
-        return Order::where('id', $order_id)->first()->cena;
+        return Order::where('id', $order_id)->first()->price;
     }
 }
