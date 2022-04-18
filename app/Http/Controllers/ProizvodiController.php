@@ -36,11 +36,6 @@ class ProizvodiController extends Controller
         }
     }   
     
-    public function flush(){
-        session()->flush();
-        return redirect('/');
-    }
-
     public function show($id)
     {
         try{

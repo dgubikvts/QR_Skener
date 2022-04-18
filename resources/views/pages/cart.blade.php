@@ -2,7 +2,7 @@
 @section('content')
 
 @if($cart)
-    <div class="col-12 col-md-10 col-lg-8 col-xl-6 m-auto">
+    <div class="col-12 col-md-10 col-lg-8 m-auto">
         <table class="table table-bordered text-center">
             <thead>
                 <th scope="col"></th>

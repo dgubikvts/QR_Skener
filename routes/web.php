@@ -19,4 +19,5 @@ Route::put('/submit-order', 'App\Http\Controllers\OrderController@submit_order')
 Route::get('/orders', 'App\Http\Controllers\OrderController@orders');
 Route::patch('/update-profile', 'App\Http\Controllers\HomeController@update_profile')->name('update.profile')->middleware('auth');
 Route::view('/my-orders', 'pages.my-orders')->name('my.orders')->middleware('auth');
+
 Auth::routes();

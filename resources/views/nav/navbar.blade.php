@@ -9,7 +9,7 @@
           <a class="nav-link" aria-current="page" href="/">Pocetna</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" aria-current="page" href="/scanner">Bar kod skener</a>
+          <a class="nav-link" aria-current="page" href="/scanner">Bar-kod skener</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" aria-current="page" href="/orders">Sve porudzbine</a>

@@ -2,8 +2,9 @@
 @section('content')
     
 <div class="row">
-    <div class="col-6 offset-2">
-        <form action="{{ route('submit.order') }}" method="POST">
+    <h3 class="h1 text-center mb-5">Unos podataka</h3>
+    <div class="col-6 offset-1">
+        <form action="{{ route('submit.order') }}" method="POST" class="col-12">
             @csrf
             @method('PUT')
             <div class="row mb-4 justify-content-center">
@@ -57,22 +58,28 @@
             <button type="submit" class="btn btn-success d-lg-block m-lg-auto">Poruci</button>
         </form>
     </div>
-    <div class="col-3 text-center">
-        <h3 class="h1 text-center mb-4">Proizvodi</h3>
-        @foreach($cartItems as $id=>$cartItem)
-            <p class="lead">@auth {{$cartItem->product->title}} @else {{$cartItem['Naziv']}} @endauth</p>
-            <div class="row">
-                <div class="col-5">
-                    <img class="w-100" src="@auth {{url($cartItem->product->image)}} @else {{url('/images/Sraf' . $id . '.jpg')}} @endauth" alt="@auth {{$cartItem->product->title}} @else {{$cartItem['Naziv']}} @endauth">
-                </div>
-                <div class="col-3 offset-4 align-self-center">
-                    <h3 class="h3">x @auth {{$cartItem->quantity}} @else {{$cartItem['Kolicina']}} @endauth</h3>
-                </div>
-            </div>
-            <p class="h3 my-3 cena" data-cena="@auth {{$cartItem->product->price * $cartItem->quantity}} @else {{$cartItem['Cena'] * $cartItem['Kolicina']}} @endauth"></p>
-            <hr>
-        @endforeach
-        <h3 class="h3 my-3 ukupno" data-cena="@auth {{$cartItem->cart->price}} @else {{session()->get('total')}} @endauth"></h3>
+    <div class="col-5 text-center">
+        <h3 class="mb-3">Vasa korpa</h3>
+        <div class="row row-cols-1 row-cols-md-1 row-cols-lg-2 row-cols-xxl-3 g-4">
+            @foreach($cartItems as $id=>$cartItem)
+                <div class="col">
+                    <div class="card h-100">
+                        <div class="card-body d-flex flex-column">
+                            <h6 class="card-title">@auth {{$cartItem->product->title}} @else {{$cartItem['Naziv']}} @endauth</h6>
+                            <img src="@auth {{url($cartItem->product->image)}} @else {{url('/images/Sraf' . $id . '.jpg')}} @endauth" alt="@auth {{$cartItem->product->title}} @else {{$cartItem['Naziv']}} @endauth">
+                            <br>
+                            <div class="mt-auto">
+                                <p class="my-0 py-0">Kolicina: @auth {{$cartItem->quantity}} @else {{$cartItem['Kolicina']}} @endauth</p>
+                                <p class="card-text lead cena" data-cena="@auth{{$cartItem->product->price * $cartItem->quantity}}@else{{$cartItem['Cena'] * $cartItem['Kolicina']}}@endauth"></p>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>  
+            @endforeach
+        </div>
+        <hr>
+        <h3 class="h3 my-3 ukupno" data-cena="@auth{{$cartItem->cart->price}}@else{{session()->get('total')}}@endauth"></h3>
     </div>
 </div>
 
