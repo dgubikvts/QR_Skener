@@ -19,13 +19,15 @@ class OrderController extends Controller
 
     public function submit_order(Request $request){
         $order = new Order();
-        $order->createOrder(Auth::id(),
-                            $request->input('name'),
-                            $request->input('lastname'),
-                            $request->input('email'),
-                            $request->input('city'),
-                            $request->input('address'),
-                            $request->input('phone'));
+        $order->createOrder(
+            Auth::id(),
+            $request->input('name'),
+            $request->input('lastname'),
+            $request->input('email'),
+            $request->input('city'),
+            $request->input('address'),
+            $request->input('phone')
+        );
         if(Auth::user()){
             $cart = Cart::where('user_id', Auth::id())->first();
             $cartItem = CartItem::where('cart_id', $cart->id)->get();

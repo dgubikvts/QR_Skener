@@ -12,7 +12,7 @@ use App\Models\CartItem;
 class CartController extends Controller
 {
     public function cart(){
-        if(Auth::check()){
+        if(Auth::user()){
             try{
                 $cart = CartItem::where('cart_id', Cart::where('user_id', Auth::id())->firstOrFail()->id)->get();
                 if($cart->isEmpty()) $cart = null;
@@ -50,7 +50,7 @@ class CartController extends Controller
     
     public function add_to_cart(Request $request){
         if($request->id and $request->quantity){
-            $proizvod = Product::findOrFail($request->id);  
+            $product = Product::findOrFail($request->id);  
             if (Auth::user()){
                 $cart = Cart::where('user_id', Auth::id())->first();
                 if(!$cart){
@@ -72,11 +72,11 @@ class CartController extends Controller
                 if(!$cart) $cart = [];
                 if(!isset($cart[$request->id])){
                     $cart[$request->id] = [
-                        'Naziv' => $proizvod->title,
+                        'Naziv' => $product->title,
                         'Kolicina' => $request->quantity,
-                        'Cena' => $proizvod->price,
-                        'Opis' => $proizvod->desc,
-                        'Barcode' => $proizvod->barcode
+                        'Cena' => $product->price,
+                        'Opis' => $product->desc,
+                        'Barcode' => $product->barcode
                     ];
                 }
                 else{
@@ -84,7 +84,7 @@ class CartController extends Controller
                 }
                 session()->put('cart', $cart);
             }
-            return response()->json(['proizvod' => $proizvod, 'qty' => $request->quantity, 'totalqty' => $this->cartQty()]);
+            return response()->json(['product' => $product, 'productQty' => $request->quantity, 'cartQty' => $this->cartQty()]);
         }
         else return abort(404);
     }
