@@ -15,7 +15,7 @@
             <tbody>
             @auth
                 @php $ukupnacena = 0 @endphp
-                @foreach($cart as $id => $cartItem)
+                @foreach($cart as $cartItem)
                     <tr class="align-middle" data-id="{{$cartItem->product->id}}" data-selectable="true">
                         <td><a href="/product/{{$cartItem->product->id}}"><img class="korpa-img p-0 m-0" src="{{url($cartItem->product->image)}}" alt="{{$cartItem->product->title}}"></a></td>
                         <td><a href="/product/{{$cartItem->product->id}}" class="text-decoration-none text-black">{{$cartItem->product->title}}</a></td>
@@ -54,7 +54,7 @@
         </form>
     </div>
 @else
-<h1 class="h1 text-center">Nemate proizvoda u korpi</h1>
+    <h1 class="h1 text-center">Nemate proizvoda u korpi</h1>
 @endif
 <script>
     $(document).ready(function () {

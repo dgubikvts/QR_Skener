@@ -1,4 +1,4 @@
-function onScanSuccess(decodedText, decodedResult) {
+  function onScanSuccess(decodedText, decodedResult) {
       quicksearch = quicksearch.replace(':id', parseInt(decodedText));
       document.location.href = quicksearch;
       html5QrcodeScanner.clear();
