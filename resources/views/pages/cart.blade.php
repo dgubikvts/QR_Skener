@@ -54,7 +54,7 @@
         </form>
     </div>
 @else
-    <h1 class="h1 text-center">Nemate proizvoda u korpi</h1>
+    <h1 class="h1 text-center">Vasa korpa je prazna</h1>
 @endif
 <script>
     $(document).ready(function () {
