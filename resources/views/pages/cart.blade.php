@@ -128,11 +128,7 @@
             }
         });
         $(".delete-all").click(function(e) {
-            if (window.confirm("Are you sure?")) {
-                var id = [];
-                $("tr[data-selectable='true']").each(function(index, tr) {
-                    id.push($(this).data('id'));
-                });
+            if (window.confirm("Sigurno zelite da obrisete sve iz korpe?")) {
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -140,15 +136,11 @@
                 });
                 $.ajax({
                     type: "POST",
-                    url: "{{route('remove.from.cart')}}",
+                    url: "{{route('remove.all.from.cart')}}",
                     data: {
                         _method: "DELETE",
-                        id: id
                     },
                     success: function (response) {
-                        $("tr[data-selectable='true']").each(function(index, tr) {
-                            $(this).remove();
-                        }); 
                         window.location.replace('/');  
                     }
                 });

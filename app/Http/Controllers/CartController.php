@@ -93,21 +93,28 @@ class CartController extends Controller
         if($request->id){
             if(Auth::user()){
                 $cart = Cart::where('user_id', Auth::id())->first();
-                foreach((array)$request->id as $id){
-                    CartItem::where([['cart_id', $cart->id],['product_id', $id]])->first()->delete();
-                }
+                CartItem::where([['cart_id', $cart->id],['product_id', $request->id]])->first()->delete();
             }
             else{
                 $cart = session()->get('cart');
-                foreach((array)$request->id as $id){
-                    if(!isset($cart[$id])) return abort(404);
-                    unset($cart[$id]);
-                }
+                if(!isset($cart[$request->id])) return abort(404);
+                unset($cart[$request->id]);
                 session()->put('cart', $cart);
             }
             return redirect()->back();
         }
         else return abort(404);
+    }
+
+    public function remove_all_from_cart(){
+        if(Auth::user()){
+            $cart = Cart::where('user_id', Auth::id())->first();
+            CartItem::where('cart_id', $cart->id)->delete();
+        }
+        else{
+            session()->forget('cart');
+        }
+        return redirect()->back();
     }
 
     public function update_cart(Request $request){

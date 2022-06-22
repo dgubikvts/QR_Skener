@@ -11,6 +11,7 @@ Route::get('/search', 'App\Http\Controllers\ProizvodiController@search')->name('
 Route::get('/quick-search/{id}', 'App\Http\Controllers\ProizvodiController@quick_search')->name('quick.search');
 Route::post('/add-to-cart', 'App\Http\Controllers\CartController@add_to_cart')->name('add.to.cart');
 Route::delete('/remove-from-cart', 'App\Http\Controllers\CartController@remove_from_cart')->name('remove.from.cart');
+Route::delete('/remove-all-from-cart', 'App\Http\Controllers\CartController@remove_all_from_cart')->name('remove.all.from.cart');
 Route::patch('/update-cart', 'App\Http\Controllers\CartController@update_cart')->name('update.cart');
 Route::get('/cart', 'App\Http\Controllers\CartController@cart')->name('cart');
 Route::get('/flush', 'App\Http\Controllers\ProizvodiController@flush')->name('flush');
