@@ -30,18 +30,18 @@ class OrderController extends Controller
         );
         if(Auth::user()){
             $cart = Cart::where('user_id', Auth::id())->first();
-            $cartItem = CartItem::where('cart_id', $cart->id)->get();
-            foreach($cartItem as $id => $proizvod){
+            $cartItems = CartItem::where('cart_id', $cart->id)->get();
+            foreach($cartItems as $id => $cartItem){
                 $orderItem = new OrderItem();
-                $orderItem->createOrderItem($order->id, $proizvod->product->id, $proizvod->quantity);
-                $proizvod->delete();
-                $order->price = $cart->price;
-                $order->save();
+                $orderItem->createOrderItem($order->id, $cartItem->product->id, $cartItem->quantity);
+                $cartItem->delete();
             }
+            $order->price = $cart->price;
+            $order->save();
         }
         else{
             $cart = session()->get('cart');
-            foreach($cart as $c => $proizvod){
+            foreach($cart as $c => $cartItem){
                 $orderItem = new OrderItem();
                 $orderItem->createOrderItem($order->id, $c, $cart[$c]['Kolicina']);
             }
