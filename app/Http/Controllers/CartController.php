@@ -50,7 +50,7 @@ class CartController extends Controller
     
     public function add_to_cart(Request $request){
         if($request->id and $request->quantity){
-            $product = Product::findOrFail($request->id);  
+            $product = Product::find($request->id);  
             if (Auth::user()){
                 $cart = Cart::where('user_id', Auth::id())->first();
                 if(!$cart){

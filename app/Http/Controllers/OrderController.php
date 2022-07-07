@@ -18,6 +18,7 @@ class OrderController extends Controller
     }
 
     public function submit_order(Request $request){
+        $items = array();
         $order = new Order();
         $order->createOrder(
             Auth::id(),
@@ -35,22 +36,23 @@ class OrderController extends Controller
                 $orderItem = new OrderItem();
                 $orderItem->createOrderItem($order->id, $cartItem->product->id, $cartItem->quantity);
                 $cartItem->delete();
+                array_push($items, $orderItem);
             }
             $order->price = $cart->price;
             $order->save();
         }
         else{
             $cart = session()->get('cart');
-            foreach($cart as $c => $cartItem){
+            foreach($cart as $id => $cartItem){
                 $orderItem = new OrderItem();
-                $orderItem->createOrderItem($order->id, $c, $cart[$c]['Kolicina']);
+                $orderItem->createOrderItem($order->id, $id, $cartItem['Kolicina']);
+                array_push($items, $orderItem);
             }
             $order->price = session()->get('total');
             $order->save();
             session()->flush();
         }
-        $order_items = OrderItem::where('order_id', $order->id)->get();
-        return view('pages.successful-order', compact('order_items'));
+        return view('pages.successful-order')->with('order_items', $items);
     }
 
     public function data_input(){
